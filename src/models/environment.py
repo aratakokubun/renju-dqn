@@ -10,6 +10,7 @@ import gym_renju
 import numpy as np
 from typing import Generator
 from src.models.agent import Agent
+from src.models import renju_agent
 
 class Environment():
 
@@ -28,7 +29,7 @@ class Environment():
       self.env.monitor.start(record_path)
 
     for i in range(episode):
-      observation = self.env.reset()
+      observation = np.reshape(self.env.reset(), (renju_agent.SIZE, renju_agent.SIZE))
       done = False
       reward = 0.0
       step_count = 0
@@ -42,9 +43,11 @@ class Environment():
 
         # Select action
         action = agent.act(observation, reward, self.env.action_space.valid_spaces)
+        print("input={0}".format(action))
 
         # Proceed state
         observation, reward, done, info = self.env.step(action)
+        observation = np.reshape(observation, (renju_agent.SIZE, renju_agent.SIZE))
 
         # Finish game
         if done:
@@ -56,6 +59,7 @@ class Environment():
         score += reward
         step_count += 1
 
+      self.env.render()
       scores.append(score)
 
       if report_interval > 0 and np.mod(i, report_interval) == 0:

@@ -93,7 +93,7 @@ class RenjuAgent(Agent):
       np.zeros((SIZE, SIZE), np.float32)
     ]
     self._last_action = 0
-    self._model_path = model_path if model_path else os.path.join(os.path.dirname(__file__), "./store")
+    self._model_path = model_path if model_path else os.path.join(os.path.dirname(__file__), "./../store")
     if not os.path.exists(self._model_path):
         print("make directory to store model at {0}".format(self._model_path))
         os.mkdir(self._model_path)
