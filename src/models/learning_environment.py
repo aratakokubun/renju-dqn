@@ -86,6 +86,10 @@ class LearningEnvironment():
         step_count += 1
         agent_index = (agent_index + 1) % 2
 
+      # Get the last reward of the next player
+      last_rewards = self.env.get_rewards()
+      scores[agent_index] += last_rewards[agent_index]
+
       total_scores[0].append(scores[0])
       total_scores[1].append(scores[1])
 
@@ -96,7 +100,7 @@ class LearningEnvironment():
           report = agent.report(i)
           if report:
             print(report)
-            self.save(report + ", score={0}".format(ave_scores), self.file_paths[agent_index])
+            self.save(report + ", score={0}".format(ave_scores[agent_index]), self.file_paths[agent_index])
         total_scores = [[], []]
 
     if record_path:
